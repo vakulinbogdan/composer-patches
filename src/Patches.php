@@ -147,11 +147,11 @@ class Patches implements PluginInterface, EventSubscriberInterface {
             $uninstallOperation = new UninstallOperation($package, 'Removing package so it can be re-installed and re-patched.');
             $this->io->write('<info>Removing package ' . $package_name . ' so that it can be re-installed and re-patched.</info>');
             if ($installHooks) {
-              $this->eventDispatcher->dispatchPackageEvent(PackageEvents::PRE_PACKAGE_UNINSTALL, $event->isDevMode(), new DefaultPolicy(), new Pool('dev'), new CompositeRepository([$package->getRepository()]), new Request(), [$uninstallOperation], $uninstallOperation);
+              $this->eventDispatcher->dispatchPackageEvent(PackageEvents::PRE_PACKAGE_UNINSTALL, $event->isDevMode(), new CompositeRepository([$package->getRepository()]), [$uninstallOperation], $uninstallOperation);
             }
             $promises[] =  $installationManager->uninstall($localRepository, $uninstallOperation);
             if ($installHooks) {
-              $this->eventDispatcher->dispatchPackageEvent(PackageEvents::POST_PACKAGE_UNINSTALL, $event->isDevMode(), new DefaultPolicy(), new Pool('dev'), new CompositeRepository([$package->getRepository()]), new Request(), [$uninstallOperation], $uninstallOperation);
+              $this->eventDispatcher->dispatchPackageEvent(PackageEvents::POST_PACKAGE_UNINSTALL, $event->isDevMode(), new CompositeRepository([$package->getRepository()]), [$uninstallOperation], $uninstallOperation);
             }
           }
         }
